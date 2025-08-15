@@ -1,0 +1,38 @@
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --background-color: #f9f9f9;
+  --card-background: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --accent-color: #4f46e5;
+
+  --tag-research-bg: #e0e7ff;
+  --tag-research-text: #3730a3;
+  --tag-product-bg: #dcfce7;
+  --tag-product-text: #166534;
+  --tag-infra-bg: #fee2e2;
+  --tag-infra-text: #991b1b;
+  --tag-policy-bg: #fef9c3;
+  --tag-policy-text: #854d0e;
+  --tag-business-bg: #e5e5e5;
+  --tag-business-text: #3f3f46;
+
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
