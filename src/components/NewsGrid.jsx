@@ -4,9 +4,11 @@ import NewsCard from './NewsCard';
 import './NewsGrid.css';
 
 const NewsGrid = ({ articles }) => {
+  const displayArticles = articles.slice(0, 12);
+  
   return (
     <main className="news-grid">
-      {articles.map((article, index) => (
+      {displayArticles.map((article, index) => (
         <NewsCard key={index} article={article} />
       ))}
     </main>
