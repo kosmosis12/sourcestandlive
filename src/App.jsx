@@ -56,9 +56,13 @@ function App() {
 
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error('GNews API failed');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.warn('GNews API failed:', response.status, errorData);
+        return [];
+      }
       const data = await response.json();
-      return data.articles.map(article => ({
+      return (data.articles || []).map(article => ({
         ...article,
         tags: getTagsFromTitle(article.title),
         source: article.source || { name: 'GNews' }
@@ -70,22 +74,10 @@ function App() {
   };
 
   const fetchNewsAPI = async () => {
-    const apiKey = 'f8f2d84513a54cd4b0c44ea46b10bb2c';
-    const url = `https://newsapi.org/v2/everything?q=(AI OR "artificial intelligence") AND (startup OR business OR funding)&language=en&sortBy=${sortBy === 'publishedAt' ? 'publishedAt' : 'relevancy'}&pageSize=15&apiKey=${apiKey}`;
-
     try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('NewsAPI failed');
-      const data = await response.json();
-      return (data.articles || []).map(article => ({
-        ...article,
-        url: article.url,
-        title: article.title,
-        description: article.description || 'No description available',
-        publishedAt: article.publishedAt,
-        source: article.source || { name: 'NewsAPI' },
-        tags: getTagsFromTitle(article.title)
-      }));
+      // NewsAPI doesn't work from browser in production, skip it
+      console.warn('NewsAPI skipped (not supported from browser)');
+      return [];
     } catch (error) {
       console.warn('NewsAPI fetch failed:', error);
       return [];
@@ -98,15 +90,27 @@ function App() {
       { url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', source: 'The Verge' },
       { url: 'https://venturebeat.com/category/ai/feed/', source: 'VentureBeat' },
       { url: 'https://www.wired.com/feed/tag/ai/latest/rss', source: 'Wired' },
-      { url: 'https://www.artificialintelligence-news.com/feed/', source: 'AI News' }
+      { url: 'https://www.artificialintelligence-news.com/feed/', source: 'AI News' },
+      { url: 'https://feeds.arstechnica.com/arstechnica/technology-lab', source: 'Ars Technica' },
+      { url: 'https://blog.google/technology/ai/rss/', source: 'Google AI Blog' }
     ];
 
     try {
       const feedPromises = rssFeeds.map(async (feed) => {
         try {
-          const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&api_key=YOUR_RSS2JSON_API_KEY&count=5`);
-          if (!response.ok) throw new Error(`RSS feed ${feed.source} failed`);
+          // Using rss2json free tier (no API key needed, works with CORS)
+          const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=10`);
+          if (!response.ok) {
+            console.warn(`RSS feed ${feed.source} returned status ${response.status}`);
+            return [];
+          }
           const data = await response.json();
+          
+          if (data.status !== 'ok') {
+            console.warn(`RSS feed ${feed.source} status:`, data.status);
+            return [];
+          }
+
           return (data.items || []).map(item => ({
             title: item.title,
             description: item.description?.replace(/<[^>]*>/g, '').substring(0, 200) || 'No description',
