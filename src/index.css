@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --onyx-black: #0a0a0a;
+  --graphite-grey: #3a3a3a;
+  --off-white: #f5f5f5;
+  --accent-cyan: #00d9ff;
+  --cyan-hover: #00b8d4;
+  
+  --background-color: var(--onyx-black);
+  --card-background: #1a1a1a;
+  --text-primary: var(--off-white);
+  --text-secondary: #b0b0b0;
+  --border-color: var(--graphite-grey);
+
+  --tag-research-bg: rgba(0, 217, 255, 0.15);
+  --tag-research-text: var(--accent-cyan);
+  --tag-product-bg: rgba(0, 255, 157, 0.15);
+  --tag-product-text: #00ff9d;
+  --tag-infra-bg: rgba(255, 107, 107, 0.15);
+  --tag-infra-text: #ff6b6b;
+  --tag-business-bg: rgba(255, 184, 0, 0.15);
+  --tag-business-text: #ffb800;
+  --tag-general-bg: rgba(160, 160, 160, 0.15);
+  --tag-general-text: #a0a0a0;
+
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}

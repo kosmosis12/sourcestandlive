@@ -1,0 +1,43 @@
+.app-footer {
+  border-top: 2px solid var(--border-color);
+  padding-top: 2rem;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.app-footer nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.app-footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.app-footer a:hover {
+  color: var(--accent-cyan);
+}
+
+.app-footer a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-cyan);
+  transition: width 0.3s ease;
+}
+
+.app-footer a:hover::after {
+  width: 100%;
+}
